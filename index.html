@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Nutrition & Recipe Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🥗 AI Nutrition & Recipe Finder</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="food_image" accept="image/*" required>
+            <button type="submit">Upload & Analyze</button>
+        </form>
+
+        {% if error_message %}
+            <p class="error">{{ error_message }}</p>
+        {% endif %}
+
+        {% if uploaded_image %}
+            <div class="image-preview">
+                <h2>Uploaded Image</h2>
+                <img src="{{ uploaded_image }}" alt="Uploaded Food">
+            </div>
+        {% endif %}
+
+        {% if ingredients %}
+            <h2>🍏 Detected Ingredients</h2>
+            <div class="tags">
+                {% for ing in ingredients %}
+                    <span class="tag">{{ ing }}</span>
+                {% endfor %}
+            </div>
+
+            <h2>🍽 Nutrition Facts (per 100g)</h2>
+            <table>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Calories</th>
+                    <th>Protein (g)</th>
+                    <th>Fat (g)</th>
+                    <th>Carbs (g)</th>
+                </tr>
+                {% for item in nutrition_data %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.calories }}</td>
+                    <td>{{ item.protein }}</td>
+                    <td>{{ item.fat }}</td>
+                    <td>{{ item.carbs }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <h2>⏰ Expiry Reminders</h2>
+            <div class="reminders">
+                {% for category, items in reminders.items() %}
+                    {% for msg in items %}
+                        <p class="{{ category }}">{{ msg }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <h2>🍳 Suggested Recipes</h2>
+            <div class="recipes">
+                {% if recipes %}
+                    {% for recipe in recipes %}
+                        <div class="recipe-card">
+                            <img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+                            <h3>{{ recipe.title }}</h3>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No recipes found for these ingredients.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if history %}
+            <h2>📜 Your Fridge History</h2>
+
+            <!-- ✅ Clear History Button -->
+            <form method="POST">
+                <button type="submit" name="clear_history" class="clear-btn">🗑️ Clear All History</button>
+            </form>
+
+            <div class="history">
+                {% for entry in history %}
+                    <div class="history-card">
+                        <p><b>Ingredients:</b> {{ entry.ingredients | join(", ") }}</p>
+                        <p><b>Reminders:</b></p>
+                        <ul>
+                            {% for category, items in entry.reminders.items() %}
+                                {% for msg in items %}
+                                    <li>{{ msg }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

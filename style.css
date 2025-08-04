@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #81b0ea;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #2b7a78;
+    margin-bottom: 20px;
+}
+
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    margin: 10px 0;
+}
+
+button {
+    background: #3db2ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover {
+    background: #0a74da;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+}
+
+.image-preview img {
+    max-width: 300px;
+    display: block;
+    margin: 10px auto;
+    border-radius: 8px;
+}
+
+.tags {
+    margin: 15px 0;
+    text-align: center;
+}
+.tag {
+    display: inline-block;
+    background: #e0f7fa;
+    color: #00796b;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #fdfdfd;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+th {
+    background: #4caf50;
+    color: white;
+}
+tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.reminders p {
+    padding: 10px;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+.expired { background: #f8d7da; color: #721c24; }
+.soon { background: #fff3cd; color: #856404; }
+.upcoming { background: #d1ecf1; color: #0c5460; }
+.safe { background: #d4edda; color: #155724; }
+
+.recipes {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.recipe-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 250px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.recipe-card img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.history {
+    margin-top: 20px;
+}
+.history-card {
+    background: #f1f8ff;
+    padding: 15px;
+    border-left: 5px solid #0275d8;
+    margin-bottom: 15px;
+    border-radius: 6px;
+}
