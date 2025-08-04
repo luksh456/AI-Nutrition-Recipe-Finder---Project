@@ -4,17 +4,20 @@ import os
 import base64
 import random
 import json
+from dotenv import load_dotenv 
+
+# 🔹 Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
 
-# 🔑 Your API Keys
-CLARIFAI_API_KEY = "3ee36c32547d42269e30f003fdbca067"
-SPOONACULAR_API_KEY = "4e84da9d03214f5fa696d5d5627d9fd3"
+# 🔑 Read from .env
+CLARIFAI_API_KEY = os.getenv("CLARIFAI_API_KEY")
+SPOONACULAR_API_KEY = os.getenv("SPOONACULAR_API_KEY")
 
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Local data file
 DATA_FILE = "fridge_data.json"
 
 # Clarifai Model Info
@@ -91,11 +94,6 @@ def load_history():
             return json.load(f)
     return []
 
-# 📌 Function: Clear history
-def clear_history():
-    if os.path.exists(DATA_FILE):
-        os.remove(DATA_FILE)
-
 @app.route("/", methods=["GET", "POST"])
 def index():
     ingredients = []
@@ -106,11 +104,7 @@ def index():
     error_message = None
 
     if request.method == "POST":
-        if "clear_history" in request.form:   # ✅ Clear history button pressed
-            clear_history()
-            return redirect(url_for("index"))
-
-        elif "food_image" not in request.files:
+        if "food_image" not in request.files:
             error_message = "No file uploaded!"
         else:
             file = request.files["food_image"]
@@ -145,7 +139,6 @@ def index():
 
                             save_to_json(ingredients, nutrition_data, reminders)
 
-                            # Recipes
                             query = ",".join(ingredients)
                             recipe_url = f"https://api.spoonacular.com/recipes/findByIngredients?ingredients={query}&number=3&apiKey={SPOONACULAR_API_KEY}"
                             recipe_response = requests.get(recipe_url)
